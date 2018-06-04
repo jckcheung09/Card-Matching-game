@@ -1,5 +1,5 @@
 var cardPosition=[];
-var amountOfPairs = 4;
+var amountOfPairs = 6;
 for(i=0;i<amountOfPairs; i++){
   cardPosition.push(i);
   cardPosition.push(i);
@@ -10,10 +10,13 @@ var firstLocation;
 var secCard;
 var secLocation;
 var matchedPair = 0;
-
+var movesTaken = 0;
+var hasGameStarted = false;
+var startTime;
+var elapsedTime;
+var finalTimeTaken;
 function shuffle(array) {
     let counter = array.length;
-
     // While there are elements in the array
     while (counter > 0) {
         // Pick a random index
@@ -39,11 +42,32 @@ function resettingAfterUnmatch(){
    secCard='';
    secLocation='';
    matchedPair = 0;
+   movesTaken = 0;
 }
+
+function startTimer(){
+  if (hasGameStarted==false) {
+  //   hasGameStarted=true;
+  //   var sec = 0;
+  //   function pad ( val ) { return val > 9 ? val : "0" + val; }
+  //   setInterval( function(){
+  //      $("#seconds").html(pad(++sec%60));
+  //      $("#minutes").html(pad(parseInt(sec/60,10)));
+  // }, 1000);
+  hasGameStarted=true;
+  startTime = Date.now();
+  var interval = setInterval(function() {
+    elapsedTime = Date.now() - startTime;
+    document.getElementById("timer").innerHTML = (elapsedTime / 1000).toFixed(3);
+    }, 100);
+  }
+}
+
 
 // Load when webpage is ready
 $(function() {
   // shuffle array
+  shuffle(cardPosition);
   shuffle(cardPosition);
   var i = 0;
   $('.flipper .back').each(function(){
@@ -52,6 +76,7 @@ $(function() {
   })
   // give all the cards a on click
   $('.flipper').click(function(){
+    startTimer();
     // only flip the card if it havent been flipped and it havent been matched with another card
     if($(this).hasClass('matched')==false && $(this).hasClass('flipped')==false){
       // check if a card have already been selected if none have been proceed
@@ -66,6 +91,8 @@ $(function() {
         console.log('location= '+firstLocation);
         // only activate when only 1 card have been selected to prevent more than 2 cards being selected
       }else if(isAcardSelected==1){
+        movesTaken++;//increment moves taken by 1
+        $('#moves').html('Moves Taken: '+movesTaken);//update movescounter on html
         isAcardSelected++;//set card selected to 2
         console.log(isAcardSelected);
         //storing the id and value of 2nd card
@@ -82,7 +109,10 @@ $(function() {
           matchedPair++;
           //set a small delay before letting players select their next card, this is to prevent players from selecting a 3rd card
           setTimeout(function(){isAcardSelected=0;},500);
+          //check if all the cards are paired if they are initiate end game
           if(matchedPair==amountOfPairs){
+            finalTimeTaken = (elapsedTime / 1000).toFixed(3);
+            console.log('time taken = '+finalTimeTaken+' seconds');
             alert('Congratulations you win!!!!');
           }
         //if the 1st and 2nd card doesnt match reset both cards
