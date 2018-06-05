@@ -58,11 +58,17 @@ function startTimer(){
   startTime = Date.now();
   var interval = setInterval(function() {
     elapsedTime = Date.now() - startTime;
-    document.getElementById("timer").innerHTML = (elapsedTime / 1000).toFixed(3);
-    }, 100);
+    document.getElementById("timer").innerHTML = (elapsedTime / 1000).toFixed(2);
+  }, 100);
   }
 }
-
+function endGameStats(){
+  finalTimeTaken = (elapsedTime / 1000).toFixed(2);
+  console.log('time taken = '+finalTimeTaken+' seconds');
+  $('#movesTaken').html(movesTaken+' moves');
+  $('#time').html(finalTimeTaken+' seconds');
+  document.getElementById("overlay").style.display = "block";
+}
 
 // Load when webpage is ready
 $(function() {
@@ -111,9 +117,8 @@ $(function() {
           setTimeout(function(){isAcardSelected=0;},500);
           //check if all the cards are paired if they are initiate end game
           if(matchedPair==amountOfPairs){
-            finalTimeTaken = (elapsedTime / 1000).toFixed(3);
-            console.log('time taken = '+finalTimeTaken+' seconds');
-            alert('Congratulations you win!!!!');
+            setTimeout(function(){endGameStats();},500);
+
           }
         //if the 1st and 2nd card doesnt match reset both cards
         }else{
@@ -128,5 +133,8 @@ $(function() {
     }
 
   })
-
+  //set up overlay on click
+  $('#retry').click(function(){
+    location.reload();
+  });
 })

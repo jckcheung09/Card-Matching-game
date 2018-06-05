@@ -1,3 +1,32 @@
+#wintxt{
+  font-size: 32px;
+  font-weight: 600;
+}
+.sidegap{
+width: 2px;
+}
+body{
+  width: 100vw;
+  height: 100vh;
+}
+.topBackground{
+  color: white;
+  font: serif;
+  opacity: 0.9;
+  width: 100vw;
+  background-color: grey;
+  background-size:     cover;
+  margin: auto;
+}
+.header{
+  font-size: 32px;
+  font-weight: 600;
+  margin-right: 100px;
+  margin-bottom: 0;
+}
+.scores{
+  margin-right: 100px;
+}
 /* entire container, keeps perspective */
 .flip-container {
 	perspective: 1000px;
@@ -9,7 +38,8 @@
 
 .flip-container, .front, .back {
 	width: 100%;
-	height: 20vh;
+	height: 15vh;
+
 }
 /* flip speed goes here */
 .flipper {
@@ -25,7 +55,6 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-  border: 1px solid black;
 }
 
 /* front pane, placed above back */
@@ -44,8 +73,39 @@
 
 }
 .gap{
-  height: 5vh;
+  height: 10px;
 }
+
+#overlay {
+
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+.popup {
+  color: black;
+	margin: 70px auto;
+	padding: 20px;
+	background: #ffffff;
+	border-radius: 5px;
+	width: 85%;
+	position: relative;
+	transition: all 5s ease-in-out;
+	font-family: 'Gloria Hallelujah', cursive;
+}
+.buttondiv{ /*div to center buttons */
+  text-align:center;
+  margin:auto;
+}
+
 #i0{
   background-image: url(../img/0.png);
   background-size:     cover;
@@ -117,4 +177,15 @@
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center;
+}
+@media only screen and (min-width: 991px) {
+  .flip-container, .front, .back {
+  	height: 28vh;
+  }
+
+}
+@media only screen and (max-width: 768px) {
+  .flip-container, .front, .back {
+  	height: 18vh;
+  }
 }
