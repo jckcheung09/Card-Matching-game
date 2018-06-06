@@ -4,6 +4,12 @@ for(i=0;i<amountOfPairs; i++){
   cardPosition.push(i);
   cardPosition.push(i);
 }
+var backgroundTheme = new Audio('sound/poem.mp3');
+backgroundTheme.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+var victoryTheme = new Audio('sound/bluesInVelvetRoom.mp3');
 var isAcardSelected=0;
 var FirstCard;
 var firstLocation;
@@ -67,11 +73,16 @@ function endGameStats(){
   console.log('time taken = '+finalTimeTaken+' seconds');
   $('#movesTaken').html(movesTaken+' moves');
   $('#time').html(finalTimeTaken+' seconds');
-  document.getElementById("overlay").style.display = "block";
+  backgroundTheme.pause();
+  victoryTheme.play();
+  document.getElementById("overlay2").style.display = "block";
 }
 
 // Load when webpage is ready
 $(function() {
+
+  $('#start').click(function(){document.getElementById("overlay1").style.display = "none"; backgroundTheme.play();});
+  $('#stop').click(function(){ audio.currentTime = 0;});
   // shuffle array
   shuffle(cardPosition);
   shuffle(cardPosition);
