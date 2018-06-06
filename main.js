@@ -1,9 +1,6 @@
 var cardPosition=[];
-var amountOfPairs = 6;
-for(i=0;i<amountOfPairs; i++){
-  cardPosition.push(i);
-  cardPosition.push(i);
-}
+var amountOfPairs = 0;
+
 var backgroundTheme = new Audio('sound/poem.mp3');
 backgroundTheme.addEventListener('ended', function() {
     this.currentTime = 0;
@@ -21,20 +18,24 @@ var hasGameStarted = false;
 var startTime;
 var elapsedTime;
 var finalTimeTaken;
-function shuffle(array) {
-    let counter = array.length;
-    // While there are elements in the array
-    while (counter > 0) {
-        // Pick a random index
-        let index = Math.floor(Math.random() * counter);
-        // Decrease counter by 1
-        counter--;
-        // And swap the last element with it
-        let temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
-    return array;
+function shuffle() {
+  for(i=0;i<amountOfPairs; i++){
+    cardPosition.push(i);
+    cardPosition.push(i);
+  }
+  let counter = cardPosition.length;
+  // While there are elements in the array
+  while (counter > 0) {
+      // Pick a random index
+      let index = Math.floor(Math.random() * counter);
+      // Decrease counter by 1
+      counter--;
+      // And swap the last element with it
+      let temp = cardPosition[counter];
+      cardPosition[counter] = cardPosition[index];
+      cardPosition[index] = temp;
+  }
+  return cardPosition;
 }
 
 function unmatched(selectedElement){
@@ -77,15 +78,22 @@ function endGameStats(){
   victoryTheme.play();
   document.getElementById("overlay2").style.display = "block";
 }
-
-// Load when webpage is ready
-$(function() {
-
-  $('#start').click(function(){document.getElementById("overlay1").style.display = "none"; backgroundTheme.play();});
-  $('#stop').click(function(){ audio.currentTime = 0;});
+function init(howManyPairs){
+  switch (howManyPairs) {
+    case 2:
+      $('#rowA').show();
+      break;
+    case 4:
+      $('#rowA,#rowB').show();
+      break;
+    case 6:
+    $('#rowA,#rowB,#rowC').show();
+      break;
+  }
+  amountOfPairs = howManyPairs;
+  document.getElementById("overlay1").style.display = "none"; backgroundTheme.play();
   // shuffle array
-  shuffle(cardPosition);
-  shuffle(cardPosition);
+  shuffle();
   var i = 0;
   $('.flipper .back').each(function(){
     $(this).attr('id','i'+cardPosition[i])
@@ -122,7 +130,9 @@ $(function() {
         if(secCard==FirstCard){
           console.log('matched');
           $(this).addClass('matched')
-          $('#'+firstLocation).addClass('matched')
+          $('#'+firstLocation).addClass('matched');
+          $('.matched').children().css({'animation':'stop'});
+          setTimeout(function(){$('.matched').children().css({'animation':'neon1 1.5s ease-in-out infinite alternate'});}, 1)
           matchedPair++;
           //set a small delay before letting players select their next card, this is to prevent players from selecting a 3rd card
           setTimeout(function(){isAcardSelected=0;},500);
@@ -144,6 +154,14 @@ $(function() {
     }
 
   })
+}
+
+// Load when webpage is ready
+$(function() {
+  $('#rowB,#rowC,#rowA').hide();
+  $('#fourCards').click(function(){init(2)});
+  $('#eightCards').click(function(){init(4)});
+  $('#twelveCards').click(function(){init(6)});
   //set up overlay on click
   $('#retry').click(function(){
     location.reload();

@@ -13,7 +13,7 @@
   <body>
     <div class="thebackground">
       <div class="topBackground">
-        <p class="text-center header">Card Flipping!!!</p>
+        <p class="text-center header">Match the Tarrot Cards</p>
             <p class="text-center scores"><span id="moves">Moves Taken: 0 </span> Time taken: <span id="timer">0.00</span>s</p>
         </div>
         <!-- <span id="minutes"></span>:<span id="seconds"></span> -->
@@ -167,9 +167,11 @@
         <p id="wintxt" class="text-center">Welcome to the Velvet Room</p>
         <p>Your goal is to match as many cards as possible</p>
         <p>Using as little moves and time as possible.</p>
-        <p>Good Luck</p>
+        <p>Choose your difficulty: 4,8,12 cards. Good Luck!</p>
         <div class="buttondiv">
-          <button type="button" name="button" id="start" class="btn btn-primary ">Click to Start</button>
+          <button type="button" name="button" id="fourCards" class="btn btn-primary "><p class="buttonText">Click for 4 cards</p></button>
+          <button type="button" name="button" id="eightCards" class="btn btn-primary "><p class="buttonText">Click for 8 cards</p></button>
+          <button type="button" name="button" id="twelveCards" class="btn btn-primary "><p class="buttonText">Click for 12 cards</p></button>
         </div>
       </div>
     </div>
@@ -180,7 +182,7 @@
           <p>You completed the game within <span id='movesTaken'></span> </p>
           <p>You finish time was <span id='time'></span> </p>
           <div class="buttondiv">
-            <button type="button" name="button" id="retry" class="btn btn-primary ">Click to replay</button>
+            <button type="button" name="button" id="retry" class="btn btn-primary "><p class="buttonText">Click to replay</p></button>
           </div>
         </div>
       </div>
