@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'blanka';
-  src: url("../Blanka-Regular.otf");
+  src: url("../Frozito.ttf");
 }
 .buttonText{
   font-size: 15px;
@@ -26,7 +26,7 @@ body{
   font: serif;
   opacity: 0.9;
   width: 100vw;
-  background-color: rgb(13, 16, 90);
+  background-color: rgb(17, 7, 33);
   background-size:     cover;
   margin: auto;
 }
