@@ -19,7 +19,7 @@
         <!-- <span id="minutes"></span>:<span id="seconds"></span> -->
 
       </div>
-    <div class="flip-container container">
+    <div class="flip-container container" id="rowA">
       <div class="row">
         <div class="col-1"></div>
         <div class="flipper col-2 " id="a1">
@@ -69,7 +69,7 @@
 
     </div>
 
-    <div class="flip-container container">
+    <div class="flip-container container" id="rowB">
       <div class="row">
         <div class="col-1"></div>
         <div class="flipper col-2 " id="b1">
@@ -118,7 +118,7 @@
 
     </div>
 
-    <div class="flip-container container">
+    <div class="flip-container container" id="rowC">
       <div class="row">
         <div class="col-1"></div>
         <div class="flipper col-2 " id="c1">
@@ -162,7 +162,19 @@
         <div class="col-1"></div>
       </div>
     </div>
-      <div id="overlay">
+    <div id="overlay1">
+      <div class="popup">
+        <p id="wintxt" class="text-center">Welcome to the Velvet Room</p>
+        <p>Your goal is to match as many cards as possible</p>
+        <p>Using as little moves and time as possible.</p>
+        <p>Good Luck</p>
+        <div class="buttondiv">
+          <button type="button" name="button" id="start" class="btn btn-primary ">Click to Start</button>
+        </div>
+      </div>
+    </div>
+
+      <div id="overlay2">
         <div class="popup">
           <p id="wintxt" class="text-center">Congratulations You Win!!</p>
           <p>You completed the game within <span id='movesTaken'></span> </p>
@@ -172,7 +184,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <audio src="sound/poem.mp3" autoplay>
+
   </body>
 </html>
