@@ -21,6 +21,7 @@ var hasGameStarted = false;
 var startTime;
 var elapsedTime;
 var finalTimeTaken;
+var movesAllowed = 100;
 function shuffle() {
   for(i=0;i<amountOfPairs; i++){
     cardPosition.push(i);
@@ -74,6 +75,16 @@ function endGameStats(){
   victoryTheme.play();
   document.getElementById("overlay2").style.display = "block";
 }
+function gameLost(){
+  finalTimeTaken = (elapsedTime / 1000).toFixed(2);
+  console.log('time taken = '+finalTimeTaken+' seconds');
+  $('#movesTaken').html(movesTaken+' moves');
+  $('#time').html(finalTimeTaken+' seconds');
+  backgroundTheme.pause();
+  victoryTheme.play();
+  $('#rowB,#rowC,#rowA,.thebackground').hide();
+  document.getElementById("overlay3").style.display = "block";
+}
 function init(howManyPairs){
   switch (howManyPairs) {
     case 2:
@@ -85,6 +96,11 @@ function init(howManyPairs){
     case 6:
     $('#rowA,#rowB,#rowC,.thebackground').show();
       break;
+      case 999:
+      $('#rowA,#rowB,#rowC,.thebackground').show();
+      movesAllowed=12;
+      howManyPairs=6;
+        break;
   }
   amountOfPairs = howManyPairs;
   document.getElementById("overlay1").style.display = "none";
@@ -98,6 +114,9 @@ function init(howManyPairs){
   })
   // give all the cards a on click
   $('.flipper').click(function(){
+    if (movesTaken>=movesAllowed) {
+      gameLost();
+    }
     startTimer();
     // only flip the card if it havent been flipped and it havent been matched with another card
     if($(this).hasClass('matched')==false && $(this).hasClass('flipped')==false){
@@ -131,7 +150,6 @@ function init(howManyPairs){
           console.log('matched');
           $(this).addClass('matched')
           $('#'+firstLocation).addClass('matched');
-          cardOpenSfx.pause();
           matchedSfx.pause();
           matchedSfx.currentTime = 0;
           matchedSfx.play();
@@ -148,7 +166,6 @@ function init(howManyPairs){
         //if the 1st and 2nd card doesnt match reset both cards
         }else{
           console.log('does not match');
-          cardOpenSfx.pause();
           wrongPair.pause();
           wrongPair.currentTime = 0;
           wrongPair.play();
@@ -170,8 +187,12 @@ $(function() {
   $('#fourCards').click(function(){init(2)});
   $('#eightCards').click(function(){init(4)});
   $('#twelveCards').click(function(){init(6)});
+  $('#maniacMode').click(function(){init(999)});
   //set up overlay on click
   $('#retry').click(function(){
+    location.reload();
+  });
+  $('#retry2').click(function(){
     location.reload();
   });
 })
