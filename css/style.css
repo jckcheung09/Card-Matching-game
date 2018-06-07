@@ -39,11 +39,11 @@ body{
   letter-spacing: 5px;
   font-size: 32px;
   font-weight: 200;
-  margin-right: 100px;
+  margin-right: 120px;
   margin-bottom: 0;
 }
 .scores{
-  margin-right: 100px;
+  margin-right: 120px;
 }
 /* entire container, keeps perspective */
 .flip-container {
@@ -142,6 +142,23 @@ body{
   text-align:center;
   margin:auto;
 }
+@media only screen and (min-width: 991px) {
+  .flip-container, .front, .back {
+  	height: 28vh;
+  }
+
+}
+@media only screen and (max-width: 768px) {
+  .flip-container, .front, .back {
+  	height: 18vh;
+  }
+  .header{
+    margin-right: 100px;
+  }
+  .scores{
+    margin-right: 100px;
+  }
+}
 
 #i0{
   background-image: url(../img/0.png);
@@ -215,17 +232,7 @@ body{
   background-repeat:   no-repeat;
   background-position: center center;
 }
-@media only screen and (min-width: 991px) {
-  .flip-container, .front, .back {
-  	height: 28vh;
-  }
 
-}
-@media only screen and (max-width: 768px) {
-  .flip-container, .front, .back {
-  	height: 18vh;
-  }
-}
 
 /*glow*/
 
