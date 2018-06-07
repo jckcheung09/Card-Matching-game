@@ -131,6 +131,7 @@ function init(howManyPairs){
           console.log('matched');
           $(this).addClass('matched')
           $('#'+firstLocation).addClass('matched');
+          cardOpenSfx.pause();
           matchedSfx.pause();
           matchedSfx.currentTime = 0;
           matchedSfx.play();
@@ -147,6 +148,7 @@ function init(howManyPairs){
         //if the 1st and 2nd card doesnt match reset both cards
         }else{
           console.log('does not match');
+          cardOpenSfx.pause();
           wrongPair.pause();
           wrongPair.currentTime = 0;
           wrongPair.play();
