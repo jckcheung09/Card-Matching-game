@@ -7,6 +7,9 @@ backgroundTheme.addEventListener('ended', function() {
     this.play();
 }, false);
 var victoryTheme = new Audio('sound/bluesInVelvetRoom.mp3');
+var wrongPair = new Audio('sound/denied.mp3');
+var matchedSfx = new Audio('sound/matched.mp3');
+var cardOpenSfx = new Audio('sound/cardOpen.mp3');
 var isAcardSelected=0;
 var FirstCard;
 var firstLocation;
@@ -54,13 +57,6 @@ function resettingAfterUnmatch(){
 
 function startTimer(){
   if (hasGameStarted==false) {
-  //   hasGameStarted=true;
-  //   var sec = 0;
-  //   function pad ( val ) { return val > 9 ? val : "0" + val; }
-  //   setInterval( function(){
-  //      $("#seconds").html(pad(++sec%60));
-  //      $("#minutes").html(pad(parseInt(sec/60,10)));
-  // }, 1000);
   hasGameStarted=true;
   startTime = Date.now();
   var interval = setInterval(function() {
@@ -81,17 +77,18 @@ function endGameStats(){
 function init(howManyPairs){
   switch (howManyPairs) {
     case 2:
-      $('#rowA').show();
+      $('#rowA,.thebackground').show();
       break;
     case 4:
-      $('#rowA,#rowB').show();
+      $('#rowA,#rowB,.thebackground').show();
       break;
     case 6:
-    $('#rowA,#rowB,#rowC').show();
+    $('#rowA,#rowB,#rowC,.thebackground').show();
       break;
   }
   amountOfPairs = howManyPairs;
-  document.getElementById("overlay1").style.display = "none"; backgroundTheme.play();
+  document.getElementById("overlay1").style.display = "none";
+  backgroundTheme.play();
   // shuffle array
   shuffle();
   var i = 0;
@@ -104,6 +101,9 @@ function init(howManyPairs){
     startTimer();
     // only flip the card if it havent been flipped and it havent been matched with another card
     if($(this).hasClass('matched')==false && $(this).hasClass('flipped')==false){
+      cardOpenSfx.pause();
+      cardOpenSfx.currentTime = 0.02;
+      cardOpenSfx.play();
       // check if a card have already been selected if none have been proceed
       if(isAcardSelected==0){
         $(this).addClass('flipped'); //flip the card
@@ -131,6 +131,9 @@ function init(howManyPairs){
           console.log('matched');
           $(this).addClass('matched')
           $('#'+firstLocation).addClass('matched');
+          matchedSfx.pause();
+          matchedSfx.currentTime = 0;
+          matchedSfx.play();
           $('.matched').children().css({'animation':'stop'});
           setTimeout(function(){$('.matched').children().css({'animation':'neon1 1.5s ease-in-out infinite alternate'});}, 1)
           matchedPair++;
@@ -138,12 +141,15 @@ function init(howManyPairs){
           setTimeout(function(){isAcardSelected=0;},500);
           //check if all the cards are paired if they are initiate end game
           if(matchedPair==amountOfPairs){
-            setTimeout(function(){endGameStats();},500);
+            setTimeout(function(){$('#rowB,#rowC,#rowA,.thebackground').hide();endGameStats();},1000);
 
           }
         //if the 1st and 2nd card doesnt match reset both cards
         }else{
           console.log('does not match');
+          wrongPair.pause();
+          wrongPair.currentTime = 0;
+          wrongPair.play();
           //set a small delay before letting players select their next card and flipping back the 2 cards,this is to prevent players from selecting a 3rd card
           setTimeout(function(){
             unmatched(secLocation);
@@ -158,7 +164,7 @@ function init(howManyPairs){
 
 // Load when webpage is ready
 $(function() {
-  $('#rowB,#rowC,#rowA').hide();
+  $('#rowB,#rowC,#rowA,.thebackground').hide();
   $('#fourCards').click(function(){init(2)});
   $('#eightCards').click(function(){init(4)});
   $('#twelveCards').click(function(){init(6)});
