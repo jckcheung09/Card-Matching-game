@@ -64,16 +64,10 @@ function endGameStats(){
   document.getElementById("overlay2").style.display = "block";
 }
 function gameLost(){
-  finalTimeTaken = (elapsedTime / 1000).toFixed(2);
-  $('#movesTaken').html(movesTaken+' moves');
-  $('#time').html(finalTimeTaken+' seconds');
   $('#rowB,#rowC,#rowA,.thebackground').hide();
   document.getElementById("overlay3").style.display = "block";
 }
 function gameLost2(){
-  finalTimeTaken = (elapsedTime / 1000).toFixed(2);
-  $('#movesTaken').html(movesTaken+' moves');
-  $('#time').html(finalTimeTaken+' seconds');
   $('#rowB,#rowC,#rowA,.thebackground').hide();
   document.getElementById("overlay4").style.display = "block";
 }
