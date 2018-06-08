@@ -1,6 +1,5 @@
 var cardPosition=[];
 var amountOfPairs = 0;
-
 var backgroundTheme = new Audio('sound/poem.mp3');
 backgroundTheme.addEventListener('ended', function() {
     this.currentTime = 0;
