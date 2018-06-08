@@ -22,6 +22,7 @@ var startTime;
 var elapsedTime;
 var finalTimeTaken;
 var movesAllowed = 100;
+var timeLimit=1000000;
 function shuffle() {
   for(i=0;i<amountOfPairs; i++){
     cardPosition.push(i);
@@ -41,21 +42,10 @@ function shuffle() {
   }
   return cardPosition;
 }
-
 function unmatched(selectedElement){
   $('#'+selectedElement).toggleClass('flipped')
   $('#'+firstLocation).toggleClass('flipped')
 }
-function resettingAfterUnmatch(){
-  isAcardSelected=0;
-   FirstCard='';
-   firstLocation='';
-   secCard='';
-   secLocation='';
-   matchedPair = 0;
-   movesTaken = 0;
-}
-
 function startTimer(){
   if (hasGameStarted==false) {
   hasGameStarted=true;
@@ -68,7 +58,6 @@ function startTimer(){
 }
 function endGameStats(){
   finalTimeTaken = (elapsedTime / 1000).toFixed(2);
-  console.log('time taken = '+finalTimeTaken+' seconds');
   $('#movesTaken').html(movesTaken+' moves');
   $('#time').html(finalTimeTaken+' seconds');
   backgroundTheme.pause();
@@ -77,13 +66,17 @@ function endGameStats(){
 }
 function gameLost(){
   finalTimeTaken = (elapsedTime / 1000).toFixed(2);
-  console.log('time taken = '+finalTimeTaken+' seconds');
   $('#movesTaken').html(movesTaken+' moves');
   $('#time').html(finalTimeTaken+' seconds');
-  backgroundTheme.pause();
-  victoryTheme.play();
   $('#rowB,#rowC,#rowA,.thebackground').hide();
   document.getElementById("overlay3").style.display = "block";
+}
+function gameLost2(){
+  finalTimeTaken = (elapsedTime / 1000).toFixed(2);
+  $('#movesTaken').html(movesTaken+' moves');
+  $('#time').html(finalTimeTaken+' seconds');
+  $('#rowB,#rowC,#rowA,.thebackground').hide();
+  document.getElementById("overlay4").style.display = "block";
 }
 function init(howManyPairs){
   switch (howManyPairs) {
@@ -98,7 +91,8 @@ function init(howManyPairs){
       break;
       case 999:
       $('#rowA,#rowB,#rowC,.thebackground').show();
-      movesAllowed=12;
+      timeLimit=15000;
+      movesAllowed=11;
       howManyPairs=6;
         break;
   }
@@ -116,6 +110,8 @@ function init(howManyPairs){
   $('.flipper').click(function(){
     if (movesTaken>=movesAllowed) {
       gameLost();
+    }else if (elapsedTime>=timeLimit) {
+      gameLost2();
     }
     startTimer();
     // only flip the card if it havent been flipped and it havent been matched with another card
@@ -128,26 +124,19 @@ function init(howManyPairs){
         $(this).addClass('flipped'); //flip the card
         isAcardSelected++; //set card selected to 1
         //storing the id and value of 1st card
-        console.log(isAcardSelected);
         FirstCard = $(this).children('.back').attr('id');
-        console.log('FirstCard= '+FirstCard);
         firstLocation = $(this).attr('id');
-        console.log('location= '+firstLocation);
         // only activate when only 1 card have been selected to prevent more than 2 cards being selected
       }else if(isAcardSelected==1){
         movesTaken++;//increment moves taken by 1
         $('#moves').html('Moves Taken: '+movesTaken);//update movescounter on html
         isAcardSelected++;//set card selected to 2
-        console.log(isAcardSelected);
         //storing the id and value of 2nd card
         $(this).addClass('flipped');
         secCard = $(this).children('.back').attr('id');
-        console.log('2nd selected= '+secCard);
         secLocation=$(this).attr('id');
-        console.log('2nd location= '+secLocation);
         //check if the 1st and 2nd card match, if they do run
         if(secCard==FirstCard){
-          console.log('matched');
           $(this).addClass('matched')
           $('#'+firstLocation).addClass('matched');
           matchedSfx.pause();
@@ -165,7 +154,6 @@ function init(howManyPairs){
           }
         //if the 1st and 2nd card doesnt match reset both cards
         }else{
-          console.log('does not match');
           wrongPair.pause();
           wrongPair.currentTime = 0;
           wrongPair.play();
@@ -193,6 +181,9 @@ $(function() {
     location.reload();
   });
   $('#retry2').click(function(){
+    location.reload();
+  });
+  $('#retry3').click(function(){
     location.reload();
   });
 })
