@@ -1,9 +1,9 @@
 # Tarot Matching
-https://github.com/jckcheung09/gameProject
+https://github.com/jckcheung09/Card-Matching-game
 ### How to run
 Run game with index.html if you have cloned or downloaded the directory.
-You can clone or download this game with the clone or download green button on this page https://github.com/jckcheung09/gameProject
-Alternatively you can go to https://jckcheung09.github.io/gameProject/ to play.
+You can clone or download this game with the clone or download green button on this page https://github.com/jckcheung09/Card-Matching-game
+Alternatively you can go to https://jckcheung09.github.io/Card-Matching-game/to play.
 The game's goal is to match as many cards as possible, using as little moves and time as possible.
 
 ### Goals
